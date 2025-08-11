@@ -1,6 +1,5 @@
 /vendor/
 /.env
-/setup.sh
 /storage/logs/*
 /storage/cache/*
 /storage/uploads/*
