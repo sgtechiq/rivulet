@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{$app_name}}</title>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Welcome to {{$app_name}}</h1>
+    <p>Version: {{$version}}</p>
+    <a href="/docs/">Documentation</a>
+    <!-- Example array map -->
+    {{map $links}}
+    <a href="{{$links.url}}">{{$links.text}}</a>
+    {{end map}}
+</body>
+</html>

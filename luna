@@ -1,0 +1,9 @@
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+$app = \Rivulet\Rivulet::getInstance();
+$app->bootstrap();
+
+$console = new \Rivulet\Console\Console($app);
+$console->run($argv);
