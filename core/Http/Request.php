@@ -1,61 +1,127 @@
 <?php
-
 namespace Rivulet\Http;
 
-class Request {
+/**
+ * HTTP Request Handler
+ *
+ * Encapsulates and normalizes HTTP request data including:
+ * - Request method and URI
+ * - Query parameters
+ * - Request payload (form/json)
+ * - File uploads
+ * - Headers
+ */
+class Request
+{
+    /** @var string HTTP method (GET, POST, etc.) */
     public $method;
+
+    /** @var string Request URI path */
     public $uri;
-    public $query;
-    public $request;
-    public $files;
-    public $headers;
-    public $server;
-    public $json;
+
+    /** @var array Query string parameters */
+    public $query = [];
+
+    /** @var array Request payload (POST/json data) */
+    public $request = [];
+
+    /** @var array Uploaded files */
+    public $files = [];
+
+    /** @var array HTTP headers */
+    public $headers = [];
+
+    /** @var array Server parameters */
+    public $server = [];
+
+    /** @var array|null Parsed JSON data */
+    public $json = null;
+
+    /** @var mixed Authenticated user */
     public $user = null;
-    public static function capture() {
+
+    /**
+     * Create new request from global variables
+     *
+     * @return self
+     */
+    public static function capture(): self
+    {
         $request = new self();
 
-        $request->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-        $request->uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-        $request->query = $_GET;
+        // Capture basic request data
+        $request->method  = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        $request->uri     = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+        $request->query   = $_GET;
         $request->request = $_POST;
-        $request->files = $_FILES;
+        $request->files   = $_FILES;
         $request->headers = getallheaders();
-        $request->server = $_SERVER;
+        $request->server  = $_SERVER;
 
-        // Handle JSON input for API
+        // Parse JSON input if present
         $input = file_get_contents('php://input');
-        if (!empty($input) && isset($request->headers['Content-Type']) && strpos($request->headers['Content-Type'], 'application/json') !== false) {
-            $request->json = json_decode($input, true);
-            $request->request = array_merge($request->request, $request->json ?? []);
+        if ($input && strpos($request->header('Content-Type', ''), 'application/json') !== false) {
+            $request->json    = json_decode($input, true) ?? [];
+            $request->request = array_merge($request->request, $request->json);
         }
 
         return $request;
     }
 
-    public function input($key = null, $default = null) {
-        if ($key === null) {
-            return $this->request;
-        }
-        return $this->request[$key] ?? $default;
+    /**
+     * Get request input value(s)
+     *
+     * @param string|null $key Parameter name (null for all)
+     * @param mixed $default Default value if not found
+     * @return mixed
+     */
+    public function input(?string $key = null, $default = null)
+    {
+        return $key === null ? $this->request : ($this->request[$key] ?? $default);
     }
 
-    public function query($key = null, $default = null) {
-        if ($key === null) {
-            return $this->query;
-        }
-        return $this->query[$key] ?? $default;
+    /**
+     * Get query parameter(s)
+     *
+     * @param string|null $key Parameter name (null for all)
+     * @param mixed $default Default value if not found
+     * @return mixed
+     */
+    public function query(?string $key = null, $default = null)
+    {
+        return $key === null ? $this->query : ($this->query[$key] ?? $default);
     }
 
-    public function file($key) {
+    /**
+     * Get uploaded file
+     *
+     * @param string $key File input name
+     * @return array|null File data or null
+     */
+    public function file(string $key): ?array
+    {
         return $this->files[$key] ?? null;
     }
 
-    public function header($key, $default = null) {
+    /**
+     * Get header value
+     *
+     * @param string $key Header name
+     * @param mixed $default Default value if not found
+     * @return mixed
+     */
+    public function header(string $key, $default = null)
+    {
         return $this->headers[$key] ?? $default;
     }
 
-    public function isJson() {
-        return isset($this->headers['Content-Type']) && strpos($this->headers['Content-Type'], 'application/json') !== false;
+    /**
+     * Check if request contains JSON payload
+     *
+     * @return bool
+     */
+    public function isJson(): bool
+    {
+        return strpos($this->header('Content-Type', ''), 'application/json') !== false;
     }
 }

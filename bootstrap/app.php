@@ -1,21 +1,33 @@
 <?php
 
-// Load Composer's autoloader
+/**
+ * Application Bootstrap File
+ *
+ * Initializes the application environment, dependencies, and configurations.
+ * - Loads Composer dependencies.
+ * - Sets up environment variables.
+ * - Configures error reporting based on the environment.
+ * - Bootstraps the Rivulet application instance.
+ */
+
+// Load Composer's autoloader for dependency management
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Load environment variables
+// Initialize and load environment variables from .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-// Initialize the application
+// Create and bootstrap the Rivulet application instance
 $app = \Rivulet\Rivulet::getInstance();
 $app->bootstrap();
 
-// Set error reporting based on environment
+// Configure error reporting based on the application environment
 if (env('APP_DEBUG', true)) {
+    // Development environment: Show all errors
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 } else {
+    // Production environment: Suppress errors
     error_reporting(0);
     ini_set('display_errors', 0);
 }

@@ -1,42 +1,86 @@
 <?php
-
 namespace Rivulet\Http;
 
-use Rivulet\Rivulet;
 use Exception;
+use Rivulet\Rivulet;
 
-class Kernel {
+/**
+ * HTTP Kernel
+ *
+ * Core request handler that:
+ * - Bootstraps the application
+ * - Dispatches requests to the router
+ * - Handles exceptions and errors
+ */
+class Kernel
+{
+    /**
+     * @var Rivulet Application instance
+     */
     protected $app;
 
-    public function __construct(Rivulet $app) {
+    /**
+     * Create new HTTP kernel
+     *
+     * @param Rivulet $app Application instance
+     */
+    public function __construct(Rivulet $app)
+    {
         $this->app = $app;
     }
 
-    public function handle(Request $request) {
+    /**
+     * Handle incoming HTTP request
+     *
+     * @param Request $request HTTP request
+     * @return Response HTTP response
+     */
+    public function handle(Request $request): Response
+    {
         try {
-            // Boot providers if not already (for full bootstrap)
+            // Ensure application is bootstrapped
             $this->app->bootstrap();
 
-            // Apply global middleware (to be implemented)
+            // Future middleware processing
             // $this->applyMiddleware($request);
 
-            // Dispatch to router
-            $router = $this->app->make('router');
-$response = $router->dispatch($request);
+            // Route the request
+            $router   = $this->app->make('router');
+            $response = $router->dispatch($request);
 
             return $response;
         } catch (Exception $e) {
-            // Handle exceptions, e.g., 404 or 500
-            if ($this->app->getConfig('app.debug')) {
-                return Response::json(['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()], 500);
-            } else {
-                return Response::json(['error' => 'Internal Server Error'], 500);
-            }
+            return $this->handleException($e);
         }
     }
 
-    // Placeholder for middleware application
-    protected function applyMiddleware(Request $request) {
-        // Implement in middleware group
+    /**
+     * Handle application exceptions
+     *
+     * @param Exception $e Thrown exception
+     * @return Response Error response
+     */
+    protected function handleException(Exception $e): Response
+    {
+        if ($this->app->getConfig('app.debug')) {
+            return Response::json([
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
+        }
+
+        return Response::json([
+            'error' => 'Internal Server Error',
+        ], 500);
+    }
+
+    /**
+     * Apply global middleware (placeholder)
+     *
+     * @param Request $request HTTP request
+     */
+    protected function applyMiddleware(Request $request)
+    {
+        // To be implemented with middleware pipeline
     }
 }

@@ -1,51 +1,74 @@
 <?php
-
 namespace Rivulet;
 
 use Rivulet\Http\Request;
 use Rivulet\Http\Response;
 
-class Controller {
+/**
+ * Base Controller Class
+ *
+ * Provides common functionality and service access
+ * for application controllers to extend.
+ */
+class Controller
+{
     protected $request;
     protected $response;
     protected $app;
-
     protected $filesystem;
+    protected $view;
+    protected $mail;
+    protected $notification;
+    protected $http;
+    protected $session;
+    protected $cookie;
 
-protected $view;
-protected $mail;
+    /**
+     * Initialize controller with dependencies
+     * @param Request $request HTTP request
+     * @param Response $response HTTP response
+     */
+    public function __construct(Request $request, Response $response)
+    {
+        $this->request      = $request;
+        $this->response     = $response;
+        $this->app          = \Rivulet\Rivulet::getInstance();
+        $this->filesystem   = $this->app->make('filesystem');
+        $this->view         = $this->app->make('view');
+        $this->mail         = $this->app->make('mail');
+        $this->notification = $this->app->make('notification');
+        $this->http         = $this->app->make('http');
+        $this->session      = $this->app->make('session');
+        $this->cookie       = $this->app->make('cookie');
+    }
 
-protected $notification;
-protected $http;
-
-protected $session;
-protected $cookie;
-public function __construct(Request $request, Response $response) {
-    $this->request = $request;
-    $this->response = $response;
-    $this->app = \Rivulet\Rivulet::getInstance();
-    $this->filesystem = $this->app->make('filesystem');
-    $this->view = $this->app->make('view');
-    $this->mail = $this->app->make('mail');
-    $this->notification = $this->app->make('notification');
-    $this->http = $this->app->make('http');
-    $this->session = $this->app->make('session');
-    $this->cookie = $this->app->make('cookie');
-}
-
-    // Helper for JSON response
-    protected function json($data, $status = 200) {
+    /**
+     * Return JSON response
+     * @param mixed $data Response data
+     * @param int $status HTTP status code
+     */
+    protected function json($data, $status = 200)
+    {
         return Response::json($data, $status);
     }
 
-    // Helper for HTML response (using templates, implement in views group)
-    protected function view($template, $data = []) {
-        // Placeholder: return View::render($template, $data);
+    /**
+     * Render view template
+     * @param string $template Template name
+     * @param array $data View data
+     */
+    protected function view($template, $data = [])
+    {
         return $this->view->render($template, $data);
     }
 
-    // Access to validator (implement in validation group)
-    protected function validate(array $data, array $rules) {
-        // Placeholder: return Validator::validate($data, $rules);
+    /**
+     * Validate input data
+     * @param array $data Data to validate
+     * @param array $rules Validation rules
+     */
+    protected function validate(array $data, array $rules)
+    {
+        // Validation implementation placeholder
     }
 }

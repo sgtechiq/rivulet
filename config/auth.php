@@ -1,13 +1,29 @@
 <?php
 
+/**
+ * Authentication Configuration
+ *
+ * Defines token-based authentication settings for the application.
+ * All values can be overridden by environment variables.
+ */
+
 return [
-    'token_expiry' => env('AUTH_TOKEN_EXPIRY', 3600), // in seconds
-    'guards' => [
+                                                      // ==================== TOKEN SETTINGS ====================
+    'token_expiry' => env('AUTH_TOKEN_EXPIRY', 3600), // Token lifetime in seconds (default: 1 hour)
+
+    // ==================== AUTHENTICATION GUARDS ====================
+    'guards'       => [
         'api' => [
-            'driver' => 'token',
-            'hash' => false,
+            'driver' => 'token', // Token-based authentication driver
+            'hash'   => false,   // Whether tokens are stored hashed (recommended: true for production)
         ],
     ],
-    'user_model' => 'App\\Models\\Users', // Set to null if no user model
-    'store_token' => true, // If true and user_model set, store token in DB for revocation
+
+                                            // ==================== USER CONFIGURATION ====================
+    'user_model'   => 'App\\Models\\Users', // Fully-qualified user model class
+                                            // Set to null to disable user association
+
+                            // ==================== TOKEN STORAGE ====================
+    'store_token'  => true, // Whether to persist tokens in database
+                            // Requires user_model to be set for token revocation
 ];
