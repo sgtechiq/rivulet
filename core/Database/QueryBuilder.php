@@ -1,14 +1,14 @@
 <?php
-
 namespace Rivulet\Database;
 
 use PDO;
-use Rivulet\Database\Operations\SelectOperation;
-use Rivulet\Database\Operations\InsertOperation;
-use Rivulet\Database\Operations\UpdateOperation;
 use Rivulet\Database\Operations\DeleteOperation;
+use Rivulet\Database\Operations\InsertOperation;
+use Rivulet\Database\Operations\SelectOperation;
+use Rivulet\Database\Operations\UpdateOperation;
 
-class QueryBuilder {
+class QueryBuilder
+{
     use SelectOperation;
     use InsertOperation;
     use UpdateOperation;
@@ -17,8 +17,9 @@ class QueryBuilder {
     protected $pdo;
     protected $table;
 
-    public function __construct(PDO $pdo, $table) {
-        $this->pdo = $pdo;
+    public function __construct(PDO $pdo, $table)
+    {
+        $this->pdo   = $pdo;
         $this->table = $table;
         $this->reset(); // From SelectOperation
     }
