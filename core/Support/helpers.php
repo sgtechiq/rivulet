@@ -1,11 +1,11 @@
 <?php
 
+use Carbon\Carbon;
 use Closure;
 use Rivulet\Cache\Cache;
 use Rivulet\Http\Response;
 use Rivulet\Logging\Logs;
 use Rivulet\Validation\Validator;
-
 /**
  * Application Core Helpers
  *
@@ -276,25 +276,25 @@ if (! function_exists('ForgetSession')) {
     }
 }
 
-if (! function_exists('FalshSession')) {
+if (! function_exists('FlashSession')) {
     /**
      * Set flash session value
      * @param string $key Session key
      * @param mixed $value Value to store
      */
-    function FalshSession($key, $value)
+    function FlashSession($key, $value)
     {
         app()->make('session')->flash($key, $value);
     }
 }
 
-if (! function_exists('GetFalshSession')) {
+if (! function_exists('GetFlashSession')) {
     /**
      * Get flash session value
      * @param string $key Session key
      * @param mixed $default Default value
      */
-    function GetFalshSession($key, $default = null)
+    function GetFlashSession($key, $default = null)
     {
         return app()->make('session')->getFlash($key, $default);
     }
@@ -334,5 +334,11 @@ if (! function_exists('ForgetCookie')) {
     function ForgetCookie($key)
     {
         app()->make('cookie')->forget($key);
+    }
+}
+if (! function_exists('carbon')) {
+    function carbon($time = null)
+    {
+        return new Carbon($time);
     }
 }
