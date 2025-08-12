@@ -8,7 +8,7 @@
 
 <body>
     <h1>Creating Middleware</h1>
-    <p>Create core/Middleware/CustomMiddleware.php or app/Middleware for custom:</p>
+    <p>Create app/Middleware/CustomMiddleware.php for custom:</p>
     <pre><code>class CustomMiddleware implements Middleware {
     public function handle(Request $request, Closure $next) {
         // Logic, e.g., check header

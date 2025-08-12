@@ -34,7 +34,7 @@ DB_PASSWORD=</code></pre>
             <p>Group by: ->groupBy('status');</p>
             <p>Count: Users::where('age', '>', 18)->getCount(); // SELECT COUNT(*)</p>
             <p>Last ID: After $user->save(), $user->getAttribute('id');</p>
-            <p>Insert: (new Users())->query()->insert(['name' => 'John']);</p>
+            <p>Insert: Users::create(['name' => 'John']); Or (new Users())->query()->insert(['name' => 'John']);</p>
             <p>Update: Users::where('id', 1)->update(['name' => 'New']);</p>
             <p>Delete: Users::where('id', 1)->delete();</p>
 
