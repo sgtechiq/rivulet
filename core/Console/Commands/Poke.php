@@ -1,9 +1,10 @@
 <?php
 namespace Rivulet\Console\Commands;
 
+use Psy\Shell;
 use Rivulet\Rivulet;
 
-class RoutesCache
+class Poke
 {
     /**
      * Rivulet application instance
@@ -12,7 +13,7 @@ class RoutesCache
     protected $app;
 
     /**
-     * Create new routes cache command instance
+     * Create new tinker command instance
      * @param Rivulet $app Application instance
      */
     public function __construct(Rivulet $app)
@@ -21,14 +22,14 @@ class RoutesCache
     }
 
     /**
-     * Execute routes caching command
-     * Loads and caches all application routes
+     * Execute interactive PsySH shell (REPL)
+     * Provides an interactive development console
      * @param array $args Command arguments (unused)
+     * @return void
      */
     public function execute($args)
     {
-        $router = $this->app->make('router');
-        $router->loadRoutes(); // Forces caching
-        echo "Routes cached\n";
+        $shell = new Shell();
+        $shell->run();
     }
 }

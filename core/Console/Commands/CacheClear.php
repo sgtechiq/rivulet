@@ -1,22 +1,44 @@
 <?php
-
 namespace Rivulet\Console\Commands;
 
-use Rivulet\Rivulet;
 use Rivulet\Cache\Cache;
+use Rivulet\Rivulet;
 
-class CacheClear {
+/**
+ * Command to clear the application cache
+ *
+ * Handles flushing of all cached items from the cache storage
+ */
+class CacheClear
+{
+    /**
+     * @var Rivulet The application instance
+     */
     protected $app;
 
-    public function __construct(Rivulet $app) {
+    /**
+     * Constructor
+     *
+     * @param Rivulet $app The application instance
+     */
+    public function __construct(Rivulet $app)
+    {
         $this->app = $app;
     }
 
-    public function execute($args) {
+    /**
+     * Executes the cache clear command
+     *
+     * Initializes the cache system and clears all cached items
+     *
+     * @param array $args Command line arguments (not used in this command)
+     * @return void
+     */
+    public function execute(array $args = [])
+    {
         $cache = new Cache($this->app->getConfig('cache'));
         $cache->clear();
+
         echo "Cache cleared\n";
     }
 }
-
-// Similar for logs:clear (unlink files), config:clear (if cached, delete cache file), etc.

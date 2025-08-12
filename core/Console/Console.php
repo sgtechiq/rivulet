@@ -4,44 +4,99 @@ namespace Rivulet\Console;
 
 use Rivulet\Rivulet;
 use Exception;
+use Rivulet\Console\Commands\{
+    RunServer,
+    CreateModel,
+    CreateController,
+    CreateService,
+    CreateTemplate,
+    CreateEvent,
+    CreateRule,
+    CreateResource,
+    CreateSeeder,
+    Create,
+    DatabaseMigrate,
+    DatabaseSeed,
+    DatabaseRollback,
+    CacheClear,
+    LogsClear,
+    ConfigClear,
+    ConfigCache,
+    RoutesList,
+    RoutesClear,
+    RoutesCache,
+    QueueWork,
+    ScheduleRun,
+    StorageLink,
+    TestRun,
+    KeyGenerate,
+    Poke,
+    Optimize
+};
 
-class Console {
+/**
+ * Console application handler for Rivulet framework
+ * 
+ * Manages command registration, execution, and provides help system
+ */
+class Console 
+{
+    /**
+     * @var Rivulet The application instance
+     */
     protected $app;
+
+    /**
+     * @var array Registered commands with their handler classes
+     */
     protected $commands = [
-        'run' => Commands\RunServer::class,
-        'create:model' => Commands\CreateModel::class,
-        'create:controller' => Commands\CreateController::class,
-        'create:service' => Commands\CreateService::class,
-        'create:template' => Commands\CreateTemplate::class,
-        'create:event' => Commands\CreateEvent::class,
-        'create:rule' => Commands\CreateRule::class,
-        'create:resource' => Commands\CreateResource::class,
-        'create:seeder' => Commands\CreateSeeder::class,
-        'create' => Commands\Create::class,
-        'database:migrate' => Commands\DatabaseMigrate::class,
-        'database:seed' => Commands\DatabaseSeed::class,
-        'database:rollback' => Commands\DatabaseRollback::class,
-        'cache:clear' => Commands\CacheClear::class,
-        'logs:clear' => Commands\LogsClear::class,
-        'config:clear' => Commands\ConfigClear::class,
-        'config:cache' => Commands\ConfigCache::class,
-        'routes:list' => Commands\RoutesList::class,
-        'routes:clear' => Commands\RoutesClear::class,
-        'routes:cache' => Commands\RoutesCache::class,
-        'queue:work' => Commands\QueueWork::class,
-        'schedule:run' => Commands\ScheduleRun::class,
-        'storage:link' => Commands\StorageLink::class,
-        'test:run' => Commands\TestRun::class,
-    'key:generate' => Commands\KeyGenerate::class,
-    'tinker' => Commands\Tinker::class,
-    'optimize' => Commands\Optimize::class,
+        'run' => RunServer::class,
+        'create:model' => CreateModel::class,
+        'create:controller' => CreateController::class,
+        'create:service' => CreateService::class,
+        'create:template' => CreateTemplate::class,
+        'create:event' => CreateEvent::class,
+        'create:rule' => CreateRule::class,
+        'create:resource' => CreateResource::class,
+        'create:seeder' => CreateSeeder::class,
+        'create' => Create::class,
+        'database:migrate' => DatabaseMigrate::class,
+        'database:seed' => DatabaseSeed::class,
+        'database:rollback' => DatabaseRollback::class,
+        'cache:clear' => CacheClear::class,
+        'logs:clear' => LogsClear::class,
+        'config:clear' => ConfigClear::class,
+        'config:cache' => ConfigCache::class,
+        'routes:list' => RoutesList::class,
+        'routes:clear' => RoutesClear::class,
+        'routes:cache' => RoutesCache::class,
+        'queue:work' => QueueWork::class,
+        'schedule:run' => ScheduleRun::class,
+        'storage:link' => StorageLink::class,
+        'test:run' => TestRun::class,
+        'key:generate' => KeyGenerate::class,
+        'poke' => Poke::class,
+        'optimize' => Optimize::class,
     ];
 
-    public function __construct(Rivulet $app) {
+    /**
+     * Console constructor
+     * 
+     * @param Rivulet $app The application instance
+     */
+    public function __construct(Rivulet $app) 
+    {
         $this->app = $app;
     }
 
-    public function run($argv) {
+    /**
+     * Main entry point for console execution
+     * 
+     * @param array $argv Command line arguments
+     * @return void
+     */
+    public function run(array $argv) 
+    {
         if (count($argv) < 2) {
             $this->showHelp();
             return;
@@ -60,7 +115,13 @@ class Console {
         }
     }
 
-    protected function showHelp() {
+    /**
+     * Displays available commands and usage help
+     * 
+     * @return void
+     */
+    protected function showHelp() 
+    {
         echo "Available commands:\n";
         foreach (array_keys($this->commands) as $cmd) {
             echo "- {$cmd}\n";

@@ -1,20 +1,35 @@
 <?php
-
 namespace Rivulet\Console\Commands;
 
-use Rivulet\Rivulet;
 use Rivulet\Queue\Scheduler;
+use Rivulet\Rivulet;
 
-class ScheduleRun {
+class ScheduleRun
+{
+    /**
+     * Rivulet application instance
+     * @var Rivulet
+     */
     protected $app;
 
-    public function __construct(Rivulet $app) {
+    /**
+     * Create new scheduler command instance
+     * @param Rivulet $app Application instance
+     */
+    public function __construct(Rivulet $app)
+    {
         $this->app = $app;
     }
 
-    public function execute($args) {
+    /**
+     * Execute scheduled jobs
+     * Runs all due scheduled jobs through the queue system
+     * @param array $args Command arguments (unused)
+     */
+    public function execute($args)
+    {
         $scheduler = new Scheduler($this->app);
         $scheduler->run();
-        echo "Schedule run\n";
+        echo "Scheduled jobs processed\n";
     }
 }

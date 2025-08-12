@@ -1,21 +1,36 @@
 <?php
-
 namespace Rivulet\Console\Commands;
 
-use Rivulet\Rivulet;
 use Rivulet\Queue\Queue;
+use Rivulet\Rivulet;
 
-class QueueWork {
+class QueueWork
+{
+    /**
+     * Rivulet application instance
+     * @var Rivulet
+     */
     protected $app;
 
-    public function __construct(Rivulet $app) {
+    /**
+     * Create new queue worker command instance
+     * @param Rivulet $app Application instance
+     */
+    public function __construct(Rivulet $app)
+    {
         $this->app = $app;
     }
 
-    public function execute($args) {
+    /**
+     * Execute queue worker command
+     * Processes jobs from the specified queue
+     * @param array $args Command arguments [queue_name, max_jobs]
+     */
+    public function execute($args)
+    {
         $queue = $args[0] ?? 'default';
-        $max = (int) ($args[1] ?? 0);
-        $q = $this->app->make('queue');
+        $max   = (int) ($args[1] ?? 0);
+        $q     = $this->app->make('queue');
         $q->process($queue, $max);
     }
 }
