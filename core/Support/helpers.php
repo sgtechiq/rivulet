@@ -1,11 +1,11 @@
 <?php
 
 use Carbon\Carbon;
-use Closure;
 use Rivulet\Cache\Cache;
 use Rivulet\Http\Response;
 use Rivulet\Logging\Logs;
 use Rivulet\Validation\Validator;
+
 /**
  * Application Core Helpers
  *
