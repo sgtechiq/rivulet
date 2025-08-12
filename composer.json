@@ -1,7 +1,6 @@
 {
   "name": "rivulet/rivulet",
   "description": "A modern, fast, lightweight PHP framework focused on API development.",
-  "version": "1.0.0",
   "type": "project",
   "license": "MIT",
   "authors": [
@@ -50,10 +49,7 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true,
-    "allow-plugins": {
-      "php-http/discovery": true
-    }
+    "sort-packages": true
   },
   "minimum-stability": "stable",
   "prefer-stable": true

@@ -1,8 +1,6 @@
 <?php
 namespace Rivulet\Providers;
 
-use Exception;
-use Rivulet\Database\Migrations\Runner;
 use Rivulet\Queue\Queue;
 
 /**
@@ -32,35 +30,6 @@ class QueueServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($this->shouldAutoMigrate()) {
-            $this->migrateJobsTable();
-        }
-    }
 
-    /**
-     * Determine if auto-migration should run
-     *
-     * @return bool True only in local/testing environments
-     */
-    protected function shouldAutoMigrate(): bool
-    {
-        return $this->app->getConfig('app.env') === 'local' &&
-        $this->app->getConfig('queue.default') === 'database';
-    }
-
-    /**
-     * Run jobs table migration if needed
-     *
-     * @throws Exception If migration fails
-     */
-    protected function migrateJobsTable(): void
-    {
-        try {
-            $runner = new Runner($this->app);
-            // Implementation would check if table exists first
-            // then run specific migration file if needed
-        } catch (Exception $e) {
-            throw new Exception('Queue table migration failed: ' . $e->getMessage());
-        }
     }
 }

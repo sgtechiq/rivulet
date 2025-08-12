@@ -31,7 +31,9 @@ use Rivulet\Console\Commands\{
     TestRun,
     KeyGenerate,
     Poke,
-    Optimize
+    Optimize,
+    CreateJob,
+    CreateListener
 };
 
 /**
@@ -77,6 +79,8 @@ class Console
         'key:generate' => KeyGenerate::class,
         'poke' => Poke::class,
         'optimize' => Optimize::class,
+        'create:listener' => CreateListener::class,
+        'create:job' => CreateJob::class,
     ];
 
     /**

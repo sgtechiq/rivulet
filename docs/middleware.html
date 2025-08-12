@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Middleware</title>
+</head>
+
+<body>
+    <h1>Creating Middleware</h1>
+    <p>Create core/Middleware/CustomMiddleware.php or app/Middleware for custom:</p>
+    <pre><code>class CustomMiddleware implements Middleware {
+    public function handle(Request $request, Closure $next) {
+        // Logic, e.g., check header
+        return $next($request);
+    }
+}</code></pre>
+    <p>Use in routes: middleware('custom', function () { route(...); });</p>
+</body>
+
+</html>

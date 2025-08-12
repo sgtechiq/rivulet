@@ -66,61 +66,10 @@ class CreateService
         }
 
         return <<<PHP
-<?php
 
-namespace {$namespace};
 
-use Rivulet\\Rivulet;
+<?php\n\nnamespace App\\Services;\n\nuse Rivulet\\Rivulet;\n\nclass {$className} {\n    // Use static methods for direct call\n    public static function method(\$param) {\n        // Logic\n        return \$param;\n    }\n\n    // Or instance if needed\n    protected \$app;\n\n    public function __construct(Rivulet \$app) {\n        \$this->app = \$app;\n    }\n\n    public function instanceMethod() {\n        // Logic\n    }\n}";
 
-class {$className}Service
-{
-    /**
-     * @var Rivulet The application instance
-     */
-    protected \$app;
-
-    /**
-     * Constructor
-     *
-     * @param Rivulet \$app The application instance
-     */
-    public function __construct(Rivulet \$app)
-    {
-        \$this->app = \$app;
-    }
-
-    /**
-     * Register service bindings and configurations
-     *
-     * @return void
-     */
-    public function register()
-    {
-        // Register service bindings
-        // \$this->app->bind(Interface::class, Implementation::class);
-    }
-
-    /**
-     * Bootstrap any application services
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        // Perform service initialization
-    }
-
-    /**
-     * Add your custom service methods below
-     */
-
-    // Example service method
-    // public function processData(array \$data): array
-    // {
-    //     // Business logic implementation
-    //     return \$processedData;
-    // }
-}
 PHP;
     }
 

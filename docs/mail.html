@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mail Operations</title>
+</head>
+
+<body>
+    <h1>Sending Mail Operations with All Types and Drivers</h1>
+    <p>Config in .env/mail.php for smtp/mailgun/sendgrid/mail/sendmail.</p>
+    <p>Send: $this->mail->to('email')->subject('Test')->html('&lt;h1&gt;Hi&lt;/h1&gt;')->attach('file.pdf')->send();</p>
+    <p>Template: ->view('email.template', $data);</p>
+    <p>Multi: new Mailer(app(), 'mailer_2')->...</p>
+    <p>Drivers: SMTP (socket), Mailgun/SendGrid (API), PHP mail, Sendmail (pipe).</p>
+</body>
+
+</html>

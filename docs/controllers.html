@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Controllers and Using CRUD</title>
+</head>
+
+<body>
+    <h1>Creating Controllers and Using CRUD</h1>
+    <p>To create a controller, use the CLI command:</p>
+    <pre><code>php luna create:controller Users</code></pre>
+    <p>This generates app/Controllers/UsersController.php with template methods: list, show, store, modify, delete,
+        destroy.</p>
+    <p>Edit the controller to use CRUD operations:</p>
+    <pre><code>use App\Models\Users;
+
+class UsersController extends Controller {
+    public function list() {
+        return Users::all();
+    }
+    public function show($id) {
+        return Users::find($id);
+    }
+    public function store() {
+        $data = $this->request->input();
+        validate($data, ['name' => 'required']);
+        $user = new Users($data);
+        $user->save();
+        return $user;
+    }
+    public function modify($id) {
+        $user = Users::find($id);
+        $data = $this->request->input();
+        $user->fill($data);
+        $user->save();
+        return $user;
+    }
+    public function delete($id) {
+        $user = Users::find($id);
+        $user->delete(true); // Soft delete
+        return 'Deleted';
+    }
+    public function destroy($id) {
+        $user = Users::find($id);
+        $user->delete(false); // Hard delete
+        return 'Destroyed';
+    }
+}</code></pre>
+    <p>Use $this->request for input, validate for data checks.</p>
+</body>
+
+</html>

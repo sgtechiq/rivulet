@@ -41,6 +41,8 @@ class Create
         'e' => 'event',
         'r' => 'resource',
         'd' => 'seeder',
+        'l' => 'listener', // Added
+        'j' => 'job',       // Added
     ];
 
     /**

@@ -20,6 +20,9 @@ return [
             'table'       => 'jobs',     // Database table name for jobs
             'queue'       => 'default',  // Default queue name
             'retry_after' => 90,         // Seconds before failed job is retried
+            'max_retries' => 3, // Maximum Retries
+            'retry_delay_base' => 2, // For exponential: delay = base ^ attempts
+            'failed_table' => 'failed_jobs', // DLQ
         ],
 
         // Redis queue driver

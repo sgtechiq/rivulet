@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Jobs</title>
+</head>
+
+<body>
+    <h1>Creating Jobs</h1>
+    <p>To create a job, use:</p>
+    <pre><code>php luna create:job SendEmail</code></pre>
+    <p>Edit app/Jobs/SendEmail.php:</p>
+    <pre><code>class SendEmail extends Job {
+    public function handle() {
+        // Mail logic with $this->data
+    }
+}</code></pre>
+    <p>Push: app()->make('queue')->push('App\Jobs\SendEmail', ['email' => 'test@example.com']);</p>
+</body>
+
+</html>

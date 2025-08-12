@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Database and ORM</title>
+</head>
+
+<body>
+    <h1>Database Connection, ORM, CRUD, Relations, Models</h1>
+
+    <h2>Connecting to Database</h2>
+    <p>Rivulet supports MySQL/MariaDB (driver: mysql), SQLite (sqlite), PostgreSQL (pgsql). Configure in .env:</p>
+    <pre><code>DB_DRIVER=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=rivulet
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+    <p>For SQLite: DB_DRIVER=sqlite, DB_DATABASE=/path/to/db.sqlite (no host/port/user/pass).</p>
+    <p>For MariaDB: Same as MySQL (driver: mysql).</p>
+    <p>For PostgreSQL: DB_DRIVER=pgsql, DB_PORT=5432.</p>
+    <p>Multi-connections (must same driver): Add DB_CONNECTION_2_HOST=..., etc. in .env. In model: protected $connection
+        = 'connection_2';</p>
+    <p>Test connection: In code, Connection::get(); throws if fails.</p>
+
+    <h2>CRUD Operations</h2>
+    <p>Select all: Users::all();</p>
+    <p>Find by ID: Users::find(1);</p>
+    <p>Single where: Users::where('name', 'John')->first();</p>
+    <p>Multiple where: Users::where('age', '>', 18)->where('status', 'active')->get();</p>
+    <p>Operators: =, >, <, LIKE, IN (e.g., where('id', 'IN' , [1,2,3]));</p>
+            <p>Sort by: ->orderBy('name', 'ASC');</p>
+            <p>Group by: ->groupBy('status');</p>
+            <p>Count: Users::where('age', '>', 18)->getCount(); // SELECT COUNT(*)</p>
+            <p>Last ID: After $user->save(), $user->getAttribute('id');</p>
+            <p>Insert: (new Users())->query()->insert(['name' => 'John']);</p>
+            <p>Update: Users::where('id', 1)->update(['name' => 'New']);</p>
+            <p>Delete: Users::where('id', 1)->delete();</p>
+
+            <h2>Using Query Relations</h2>
+            <p>HasOne: public function profile() { return $this->hasOne('App\Models\Profile', 'user_id'); } Usage:
+                $user->profile();</p>
+            <p>HasMany: public function articles() { return $this->hasMany('App\Models\Articles', 'author_id'); } Usage:
+                $user->articles();</p>
+            <p>BelongsTo: public function author() { return $this->belongsTo('App\Models\Authors', 'author_id'); }
+                Usage: $article->author();</p>
+            <p>BelongsToMany: public function tags() { return $this->belongsToMany('App\Models\Tags', 'article_tags',
+                'article_id', 'tag_id'); } Usage: $article->tags();</p>
+
+            <h2>Create Model</h2>
+            <p>php luna create:model Users</p>
+            <p>Edit: protected $table = 'users'; $fillable = ['name']; $guarded = ['id']; $hidden = ['password'];
+                $connection = 'default'; $columns = ['id' => 'int'];</p>
+</body>
+
+</html>

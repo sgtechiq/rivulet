@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Queues and Scheduling</title>
+</head>
+
+<body>
+    <h1>Creating Job Queues and Scheduling</h1>
+    <p>Create job: php luna create:job SendEmail</p>
+    <p>Edit: public function handle() { // logic with $this->data }</p>
+    <p>Push: app()->make('queue')->push('App\Jobs\SendEmail', ['data' => 'test']);</p>
+    <p>Process: php luna queue:work [queue] [max]</p>
+    <p>Schedule: In config/schedule.php ['everyMinute' => ['job' => 'App\Jobs\Cleanup', 'data' => []]];</p>
+    <p>Cron: * * * * * php luna schedule:run</p>
+    <p>Config QUEUE_CONNECTION=db/redis for driver.</p>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Validation</title>
+</head>
+
+<body>
+    <h1>Validation (All Rules and Usage)</h1>
+    <p>Use: validate($data, ['field' => 'required|max:10']);</p>
+    <p>Rules list and usage:</p>
+    <ul>
+        <li>required: Not empty. 'field' => 'required'</li>
+        <li>string: Is string. 'field' => 'string'</li>
+        <li>bool: Is boolean. 'field' => 'bool'</li>
+        <li>email: Valid email. 'field' => 'email'</li>
+        <li>number: Numeric. 'field' => 'number'</li>
+        <li>integer: Integer. 'field' => 'integer'</li>
+        <li>url: Valid URL. 'field' => 'url'</li>
+        <li>date: Valid date (default Y-m-d, param:format). 'field' => 'date:Y-m-d'</li>
+        <li>file: Extensions (param:pdf,jpg). 'field' => 'file:pdf,jpg'</li>
+        <li>array: Is array. 'field' => 'array'</li>
+        <li>ip: Valid IP. 'field' => 'ip'</li>
+        <li>alpha: Letters only. 'field' => 'alpha'</li>
+        <li>alphanum: Letters/numbers. 'field' => 'alphanum'</li>
+        <li>regex: Pattern match (param:/pattern/). 'field' => 'regex:/^[a-z]+$/'</li>
+        <li>filesize: Max bytes (param:1024). 'field' => 'filesize:1024'</li>
+        <li>max: Max value/length/count (param:10). 'field' => 'max:10'</li>
+        <li>min: Min value/length/count (param:5). 'field' => 'min:5'</li>
+        <li>between: Between min,max (param:5,10). 'field' => 'between:5,10'</li>
+    </ul>
+    <p>Throws JSON errors on fail. Custom rules in app/Rules.</p>
+</body>
+
+</html>

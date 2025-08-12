@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Routing</title>
+</head>
+
+<body>
+    <h1>Routing (Add Route, Group, Prefix, Custom File)</h1>
+    <p>Add route in routes/api.php: route('GET', '/test', Controller::class, 'method');</p>
+    <p>Group: group('prefix=admin', 'middleware=auth', function () { route(...); });</p>
+    <p>Prefix: prefix('api', function () { route(...); });</p>
+    <p>Custom file: Create routes/custom.php with routes. Add to config/routes.php: 'handlers' => ['custom' =>
+        'custom.php']; Access /custom/test.</p>
+</body>
+
+</html>

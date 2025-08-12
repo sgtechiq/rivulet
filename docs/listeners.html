@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Listeners</title>
+</head>
+
+<body>
+    <h1>Creating Listeners</h1>
+    <p>To create a listener, use:</p>
+    <pre><code>php luna create:listener SendWelcomeEmail</code></pre>
+    <p>Edit app/Listeners/SendWelcomeEmail.php:</p>
+    <pre><code>class SendWelcomeEmail extends Listener {
+    public function handle(Event $event) {
+        $user = $event->getData()['user'];
+        // Send email
+    }
+}</code></pre>
+    <p>Register in config/events.php for the event.</p>
+</body>
+
+</html>
