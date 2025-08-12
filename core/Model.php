@@ -32,18 +32,6 @@ abstract class Model
     }
 
     /**
-     * Create and save a new model instance (static call).
-     * Example: User::create(['name' => 'John']);
-     */
-    public static function create(array $data)
-    {
-        $model = new static(); // Create new instance
-        $model->fill($data);   // Fill with data
-        $model->save();        // Save to DB
-        return $model;         // Return the model instance
-    }
-
-    /**
      * Get the database connection instance
      */
     protected function getConnection()
@@ -93,6 +81,18 @@ abstract class Model
     {
         $instance = new static();
         return $instance->query()->where($column, $operator, $value);
+    }
+
+    /**
+     * Create and save a new model instance (static call).
+     * Example: User::create(['name' => 'John']);
+     */
+    public static function create(array $data)
+    {
+        $model = new static(); // Create new instance
+        $model->fill($data);   // Fill with data
+        $model->save();        // Save to DB
+        return $model;         // Return the model instance
     }
 
     /**
