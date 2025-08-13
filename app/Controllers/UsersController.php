@@ -32,7 +32,7 @@ class UsersController extends Controller
 
     }
 
-    public function modify($id)
+    public function edit($id)
     {
         $this->validate(['id' => $id], ['id' => 'required|integer']);
         $user = Users::find($id);

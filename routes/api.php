@@ -14,7 +14,7 @@ prefix('user', function () {
     route('GET', '/', UsersController::class, 'list');
     route('GET', '/{id}', UsersController::class, 'show');
     route('POST', '/', UsersController::class, 'store');
-    route('PUT', '/{id}', UsersController::class, 'modify');
+    route('PUT', '/{id}', UsersController::class, 'update');
     route('DELETE', '/{id}', UsersController::class, 'delete');
     route('DELETE', '/{id}/force', UsersController::class, 'destroy');
 

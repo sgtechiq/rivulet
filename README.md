@@ -2,12 +2,12 @@
 
 ![Logo](logo.png)
 
-Rivulet is a modern, fast, lightweight PHP framework designed exclusively for API development. It prioritizes simplicity, performance, security, and extensibility, making it ideal for building scalable APIs. Built for PHP 8.3+ on Ubuntu, Rivulet is production-ready and deployable on shared hosting, VPS, Docker, or cloud environments. It focuses on API features, with no unnecessary web view bloat.
+Rivulet is a modern, fast, lightweight PHP framework designed exclusively for API development. It prioritizes simplicity, performance, security, and extensibility, making it ideal for building scalable APIs. Built for PHP 8.3+, Rivulet is production-ready and deployable on shared hosting, VPS, Docker, or cloud environments. It focuses on API features, with no unnecessary web view bloat.
 
 ## Key Features
 
 - **API-Centric Routing**: File-based routing with prefixes, groups, middleware, and file viewers. Supports caching for faster loads.
-- **Lightweight ORM**: CodeIgniter-inspired ORM with CRUD operations, relationships (hasOne, hasMany, belongsTo, belongsToMany), migrations, and seeders. Supports MySQL, MariaDB, SQLite, PostgreSQL, with multiple connections (same driver).
+- **Lightweight ORM**: ORM with CRUD operations, relationships (hasOne, hasMany, belongsTo, belongsToMany), migrations, and seeders. Supports MySQL, MariaDB, SQLite, PostgreSQL, with multiple connections.
 - **Authentication**: Token-based security (JWT-like) from scratch, with password encryption. Supports stateless or DB-stored tokens for revocation.
 - **Filesystem Management**: Upload, delete, copy, move, rename, download files/directories. Zip compression/extraction. CLI-linked public storage.
 - **Template Engine**: Simple .html templates for variables, array mapping/loops. Load by name or subdir. Default pages for 404/unauthorized.

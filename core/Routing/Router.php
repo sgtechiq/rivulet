@@ -235,4 +235,12 @@ class Router
         call_user_func($callback);
         $this->currentGroupMiddleware = $previousMiddleware;
     }
+    public function endpoint($uri, $controller) {
+    $this->addRoute('GET', $uri, $controller, 'list');
+    $this->addRoute('GET', $uri . '/show/{id}', $controller, 'show');
+    $this->addRoute('POST', $uri . '/add', $controller, 'store');
+    $this->addRoute('POST', $uri . '/edit/{id}', $controller, 'edit');
+    $this->addRoute('DELETE', $uri . '/softdelete/{id}', $controller, 'delete');
+    $this->addRoute('DELETE', $uri . '/delete/{id}', $controller, 'destroy');
+}
 }

@@ -97,6 +97,12 @@ if (! function_exists('middleware')) {
     }
 }
 
+if (! function_exists('endpoint')) {
+    function endpoint($uri, $controller) {
+        app()->make('router')->endpoint($uri, $controller);
+    }
+}
+
 if (! function_exists('fileroute')) {
     /**
      * Register file route

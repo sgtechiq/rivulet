@@ -131,7 +131,7 @@ class {$className} extends Controller
      *
      * @param mixed \$id Resource identifier
      */
-    public function modify(\$id)
+    public function edit(\$id)
     {
         // Implement update logic
     }
