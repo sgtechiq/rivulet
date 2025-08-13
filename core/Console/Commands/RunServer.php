@@ -27,7 +27,7 @@ class RunServer
      */
     public function execute($args)
     {
-        $host = $args[0] ?? 'localhost:8000';
+        $host = $args[0] ?? 'localhost:8080';
         echo "Starting server on http://{$host}\n";
         exec("php -S {$host} -t public");
     }
