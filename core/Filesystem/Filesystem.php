@@ -64,6 +64,20 @@ class Filesystem
         return $realPath;
     }
 
+    public function createFile($path, $content = '')
+    {
+        $fullPath = $this->root . '/' . ltrim($path, '/');
+        if (file_exists($fullPath)) {
+            throw new Exception('File already exists');
+        }
+        $dir = dirname($fullPath);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        file_put_contents($fullPath, $content);
+        chmod($fullPath, 0644);
+        return $path;
+    }
     /**
      * Handle file upload
      *

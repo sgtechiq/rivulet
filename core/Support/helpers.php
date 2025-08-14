@@ -78,6 +78,33 @@ if (! function_exists('fileroute')) {
         app()->make('router')->addFile($uri, $path);
     }
 }
+// Request Helpers
+if (! function_exists('Request')) {
+    function Request($key = null, $default = null) {
+        $request = app()->make('http.request'); // Assume bound or global
+        if ($key) {
+            return $request->input($key, $default);
+        }
+        return $request->input();
+    }
+}
+
+if (! function_exists('RequestQuery')) {
+    function RequestQuery($key = null, $default = null) {
+        $request = app()->make('http.request');
+        if ($key) {
+            return $request->query($key, $default);
+        }
+        return $request->query;
+    }
+}
+
+if (! function_exists('RequestHeader')) {
+    function RequestHeader($key, $default = null) {
+        $request = app()->make('http.request');
+        return $request->header($key, $default);
+    }
+}
 
 // Response Helpers
 if (! function_exists('jsonSuccess')) {
@@ -244,6 +271,93 @@ if (! function_exists('carbon')) {
         return new Carbon($time);
     }
 }
+
+// File System Helpers 
+if (! function_exists('UploadFile')) {
+    function UploadFile($file, $path = '', $name = null) {
+        return app()->make('filesystem')->upload($file, $path, $name);
+    }
+}
+
+if (! function_exists('CreateFile')) {
+    function CreateFile($path, $content = '') {
+        return app()->make('filesystem')->createFile($path, $content);
+    }
+}
+
+if (! function_exists('DownloadFile')) {
+    function DownloadFile($path) {
+        return app()->make('filesystem')->download($path);
+    }
+}
+
+if (! function_exists('RenameFile')) {
+    function RenameFile($path, $newName) {
+        return app()->make('filesystem')->rename($path, $newName);
+    }
+}
+
+if (! function_exists('MoveFile')) {
+    function MoveFile($source, $destination) {
+        return app()->make('filesystem')->move($source, $destination);
+    }
+}
+
+if (! function_exists('CopyFile')) {
+    function CopyFile($source, $destination) {
+        return app()->make('filesystem')->copy($source, $destination);
+    }
+}
+
+if (! function_exists('DeleteFile')) {
+    function DeleteFile($path) {
+        return app()->make('filesystem')->delete($path);
+    }
+}
+
+if (! function_exists('CreateDirectory')) {
+    function CreateDirectory($path) {
+        return app()->make('filesystem')->createDirectory($path);
+    }
+}
+
+if (! function_exists('RenameDirectory')) {
+    function RenameDirectory($path, $newName) {
+        $dir = dirname($path);
+        return app()->make('filesystem')->rename($path, $dir . '/' . $newName);
+    }
+}
+
+if (! function_exists('MoveDirectory')) {
+    function MoveDirectory($source, $destination) {
+        return app()->make('filesystem')->move($source, $destination);
+    }
+}
+
+if (! function_exists('CopyDirectory')) {
+    function CopyDirectory($source, $destination) {
+        return app()->make('filesystem')->copy($source, $destination);
+    }
+}
+
+if (! function_exists('DeleteDirectory')) {
+    function DeleteDirectory($path) {
+        return app()->make('filesystem')->delete($path);
+    }
+}
+
+if (! function_exists('CompressDirectory')) {
+    function CompressDirectory($sourceDir, $zipPath = null) {
+        return app()->make('filesystem')->zip($sourceDir, $zipPath);
+    }
+}
+
+if (! function_exists('ExtractFile')) {
+    function ExtractFile($zipPath, $extractTo = '') {
+        return app()->make('filesystem')->unzip($zipPath, $extractTo);
+    }
+}
+
 // Mail and Notifications Helpers
 if (!function_exists('SendEmail')) {
    // SendEmail
@@ -288,29 +402,38 @@ if (!function_exists('SendEmail')) {
         return $mailer->send();
     }
 }
-if (!function_exists('Notify')) {
-    // SendNotification
-    function Notify(
-        $to,
-        string $channel,
-        string $title = '',
-        string $body = '',
-        array $data = []
-    ): bool {
-        try {
-            return app()->make('notification')
-                ->channel($channel)
-                ->to($to)
-                ->title($title)
-                ->body($body)
-                ->data($data)
-                ->send();
-        } catch (Exception $e) {
-            // Log error if logging is available
-            if (function_exists('log_error')) {
-                log_error("Notification failed: " . $e->getMessage());
-            }
-            throw $e;
-        }
+if (! function_exists('NotifyFirebase')) {
+    function NotifyFirebase($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('firebase')->to($to)->title($title)->body($body)->data($data)->send();
+    }
+}
+
+if (! function_exists('NotifyPusher')) {
+    function NotifyPusher($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('pusher')->to($to)->title($title)->body($body)->data($data)->send();
+    }
+}
+
+if (! function_exists('NotifySlack')) {
+    function NotifySlack($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('slack')->to($to)->title($title)->body($body)->data($data)->send();
+    }
+}
+
+if (! function_exists('NotifyWhatsapp')) {
+    function NotifyWhatsapp($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('whatsapp')->to($to)->title($title)->body($body)->data($data)->send();
+    }
+}
+
+if (! function_exists('NotifySms')) {
+    function NotifySms($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('sms')->to($to)->title($title)->body($body)->data($data)->send();
+    }
+}
+
+if (! function_exists('NotifyMail')) {
+    function NotifyMail($to, $title, $body, $data = []) {
+        app()->make('notification')->channel('mail')->to($to)->title($title)->body($body)->data($data)->send();
     }
 }
