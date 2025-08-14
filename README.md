@@ -162,7 +162,7 @@ id | name | email | phone | username | password | authtoken | created_at | updat
 
 ### 📚 Documentation & Tutorials
 
-Full tutorials provided in `docs/` covering:
+Full tutorials provided in [docs](https://rivuletapi.netlify.app/) covering:
 
 - Database connection, migrations, seeders.
 - Model & controller creation.
