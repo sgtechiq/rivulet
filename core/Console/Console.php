@@ -33,7 +33,8 @@ use Rivulet\Console\Commands\{
     Poke,
     Optimize,
     CreateJob,
-    CreateListener
+    CreateListener,
+    CreateMiddleware
 };
 
 /**
@@ -81,6 +82,7 @@ class Console
         'optimize' => Optimize::class,
         'create:listener' => CreateListener::class,
         'create:job' => CreateJob::class,
+        'create:middleware' =>CreateMiddleware::class,
     ];
 
     /**

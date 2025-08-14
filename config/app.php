@@ -33,18 +33,4 @@ return [
         \Rivulet\Providers\CookiesServiceProvider::class,      // Cookie handling
         \Rivulet\Providers\AppServiceProvider::class,          // Application bootstrapping
     ],
-
-    // ==================== HELPER FUNCTIONS ====================
-    // Files containing global helper functions (auto-loaded on startup)
-    'helpers'   => [
-        // Example:
-        // __DIR__ . '/../app/Helpers/global.php',
-    ],
-
-    // ==================== CUSTOM SERVICES ====================
-    // Application-specific services (auto-resolved via dependency injection)
-    'services'  => [
-        // Example:
-        // 'PaymentProcessor' => \App\Services\PaymentProcessor::class,
-    ],
 ];

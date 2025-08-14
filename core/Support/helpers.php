@@ -6,17 +6,9 @@ use Rivulet\Http\Response;
 use Rivulet\Logging\Logs;
 use Rivulet\Validation\Validator;
 
-/**
- * Application Core Helpers
- *
- * Global helper functions for common framework operations
- */
-
 // Application Helpers
 if (! function_exists('app')) {
-    /**
-     * Get the application instance
-     */
+    // app
     function app()
     {
         return \Rivulet\Rivulet::getInstance();
@@ -24,11 +16,7 @@ if (! function_exists('app')) {
 }
 
 if (! function_exists('env')) {
-    /**
-     * Get environment variable
-     * @param string $key Environment key
-     * @param mixed $default Default value if not found
-     */
+    // env
     function env($key, $default = null)
     {
         return $_ENV[$key] ?? $default;
@@ -36,11 +24,7 @@ if (! function_exists('env')) {
 }
 
 if (! function_exists('config')) {
-    /**
-     * Get configuration value
-     * @param string $key Config key
-     * @param mixed $default Default value if not found
-     */
+    // config
     function config($key, $default = null)
     {
         return app()->getConfig($key, $default);
@@ -49,13 +33,7 @@ if (! function_exists('config')) {
 
 // Routing Helpers
 if (! function_exists('route')) {
-    /**
-     * Register a new route
-     * @param string $method HTTP method
-     * @param string $uri Route URI
-     * @param mixed $controllerOrAction Controller class or closure
-     * @param string|null $methodName Controller method name if using class
-     */
+    // route
     function route($method, $uri, $controllerOrAction, $methodName = null)
     {
         app()->make('router')->addRoute($method, $uri, $controllerOrAction, $methodName);
@@ -63,11 +41,7 @@ if (! function_exists('route')) {
 }
 
 if (! function_exists('prefix')) {
-    /**
-     * Create route group with prefix
-     * @param string $prefix URI prefix
-     * @param Closure $callback Route definitions
-     */
+    // prefix
     function prefix($prefix, Closure $callback)
     {
         app()->make('router')->prefix($prefix, $callback);
@@ -75,10 +49,7 @@ if (! function_exists('prefix')) {
 }
 
 if (! function_exists('group')) {
-    /**
-     * Create route group
-     * @param mixed ...$args Group parameters
-     */
+    // group
     function group(...$args)
     {
         app()->make('router')->group(...$args);
@@ -86,11 +57,7 @@ if (! function_exists('group')) {
 }
 
 if (! function_exists('middleware')) {
-    /**
-     * Apply middleware to route group
-     * @param mixed $middleware Middleware class or array
-     * @param Closure $callback Route definitions
-     */
+    // middleware
     function middleware($middleware, Closure $callback)
     {
         app()->make('router')->middleware($middleware, $callback);
@@ -98,17 +65,14 @@ if (! function_exists('middleware')) {
 }
 
 if (! function_exists('endpoint')) {
+    // endpoint
     function endpoint($uri, $controller) {
         app()->make('router')->endpoint($uri, $controller);
     }
 }
 
 if (! function_exists('fileroute')) {
-    /**
-     * Register file route
-     * @param string $uri Route URI
-     * @param string $path File path
-     */
+    // fileroute
     function fileroute($uri, $path)
     {
         app()->make('router')->addFile($uri, $path);
@@ -117,11 +81,7 @@ if (! function_exists('fileroute')) {
 
 // Response Helpers
 if (! function_exists('jsonSuccess')) {
-    /**
-     * Return JSON success response
-     * @param mixed $data Response data
-     * @param int $status HTTP status code
-     */
+    // jsonSuccess
     function jsonSuccess($data, $status = 200)
     {
         return Response::json(['success' => true, 'data' => $data], $status);
@@ -129,11 +89,7 @@ if (! function_exists('jsonSuccess')) {
 }
 
 if (! function_exists('jsonError')) {
-    /**
-     * Return JSON error response
-     * @param string $message Error message
-     * @param int $status HTTP status code
-     */
+    // jsonError
     function jsonError($message, $status = 400)
     {
         return Response::json(['success' => false, 'error' => $message], $status);
@@ -142,10 +98,7 @@ if (! function_exists('jsonError')) {
 
 // Security Helpers
 if (! function_exists('PassEncrypt')) {
-    /**
-     * Hash password using bcrypt
-     * @param string $password Plain text password
-     */
+    // PassEncrypt
     function PassEncrypt($password)
     {
         return password_hash($password, PASSWORD_BCRYPT);
@@ -153,11 +106,7 @@ if (! function_exists('PassEncrypt')) {
 }
 
 if (! function_exists('PassVerify')) {
-    /**
-     * Verify password against hash
-     * @param string $password Plain text password
-     * @param string $hash Hashed password
-     */
+    // PassVerify
     function PassVerify($password, $hash)
     {
         return password_verify($password, $hash);
@@ -166,10 +115,7 @@ if (! function_exists('PassVerify')) {
 
 // Utility Helpers
 if (! function_exists('BaseClassName')) {
-    /**
-     * Get class name without namespace
-     * @param mixed $class Class name or object
-     */
+    // BaseClassName
     function BaseClassName($class)
     {
         $class = is_object($class) ? get_class($class) : $class;
@@ -179,11 +125,7 @@ if (! function_exists('BaseClassName')) {
 
 // Logging Helpers
 if (! function_exists('LogMessage')) {
-    /**
-     * Log message with specified level
-     * @param string $message Log message
-     * @param string $level Log level
-     */
+    // LogMessage
     function LogMessage($message, $level = 'info')
     {
         $logger = new Logs(app()->getConfig('logging'));
@@ -193,11 +135,7 @@ if (! function_exists('LogMessage')) {
 
 // Cache Helpers
 if (! function_exists('GetCache')) {
-    /**
-     * Get cached value
-     * @param string $key Cache key
-     * @param mixed $default Default value
-     */
+    // GetCache
     function GetCache($key, $default = null)
     {
         $cache = new Cache(app()->getConfig('cache'));
@@ -206,12 +144,7 @@ if (! function_exists('GetCache')) {
 }
 
 if (! function_exists('PutCache')) {
-    /**
-     * Store value in cache
-     * @param string $key Cache key
-     * @param mixed $value Value to store
-     * @param int $ttl Time to live in seconds
-     */
+    // PutCache
     function PutCache($key, $value, $ttl = 3600)
     {
         $cache = new Cache(app()->getConfig('cache'));
@@ -221,11 +154,7 @@ if (! function_exists('PutCache')) {
 
 // Validation Helpers
 if (! function_exists('validate')) {
-    /**
-     * Validate data against rules
-     * @param array $data Data to validate
-     * @param array $rules Validation rules
-     */
+    // validate
     function validate(array $data, array $rules)
     {
         $validator = new Validator();
@@ -235,11 +164,7 @@ if (! function_exists('validate')) {
 
 // Event Helpers
 if (! function_exists('TriggerEvent')) {
-    /**
-     * Fire an event
-     * @param string $event Event name
-     * @param array $data Event data
-     */
+    // TriggerEvent
     function TriggerEvent($event, $data = [])
     {
         app()->make('event')->fire($event, $data);
@@ -248,11 +173,7 @@ if (! function_exists('TriggerEvent')) {
 
 // Session Helpers
 if (! function_exists('SetSession')) {
-    /**
-     * Set session value
-     * @param string $key Session key
-     * @param mixed $value Value to store
-     */
+    // SetSession
     function SetSession($key, $value)
     {
         app()->make('session')->set($key, $value);
@@ -260,11 +181,7 @@ if (! function_exists('SetSession')) {
 }
 
 if (! function_exists('GetSession')) {
-    /**
-     * Get session value
-     * @param string $key Session key
-     * @param mixed $default Default value
-     */
+    // GetSession
     function GetSession($key, $default = null)
     {
         return app()->make('session')->get($key, $default);
@@ -272,10 +189,7 @@ if (! function_exists('GetSession')) {
 }
 
 if (! function_exists('ForgetSession')) {
-    /**
-     * Remove session value
-     * @param string $key Session key
-     */
+    // ForgetSession
     function ForgetSession($key)
     {
         app()->make('session')->forget($key);
@@ -283,11 +197,7 @@ if (! function_exists('ForgetSession')) {
 }
 
 if (! function_exists('FlashSession')) {
-    /**
-     * Set flash session value
-     * @param string $key Session key
-     * @param mixed $value Value to store
-     */
+    // FlashSession
     function FlashSession($key, $value)
     {
         app()->make('session')->flash($key, $value);
@@ -295,11 +205,7 @@ if (! function_exists('FlashSession')) {
 }
 
 if (! function_exists('GetFlashSession')) {
-    /**
-     * Get flash session value
-     * @param string $key Session key
-     * @param mixed $default Default value
-     */
+    // GetFlashSession
     function GetFlashSession($key, $default = null)
     {
         return app()->make('session')->getFlash($key, $default);
@@ -308,12 +214,7 @@ if (! function_exists('GetFlashSession')) {
 
 // Cookie Helpers
 if (! function_exists('SetCookie')) {
-    /**
-     * Set cookie
-     * @param string $key Cookie name
-     * @param mixed $value Cookie value
-     * @param int|null $expiry Expiration time in seconds
-     */
+    // SetCookie
     function SetCookie($key, $value, $expiry = null)
     {
         app()->make('cookie')->set($key, $value, $expiry);
@@ -321,11 +222,7 @@ if (! function_exists('SetCookie')) {
 }
 
 if (! function_exists('GetCookie')) {
-    /**
-     * Get cookie value
-     * @param string $key Cookie name
-     * @param mixed $default Default value
-     */
+    // GetCookie
     function GetCookie($key, $default = null)
     {
         return app()->make('cookie')->get($key, $default);
@@ -333,16 +230,15 @@ if (! function_exists('GetCookie')) {
 }
 
 if (! function_exists('ForgetCookie')) {
-    /**
-     * Remove cookie
-     * @param string $key Cookie name
-     */
+    // ForgetCookie
     function ForgetCookie($key)
     {
         app()->make('cookie')->forget($key);
     }
 }
+
 if (! function_exists('carbon')) {
+    // carbon
     function carbon($time = null)
     {
         return new Carbon($time);
