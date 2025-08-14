@@ -62,6 +62,9 @@ class Console
         'create:rule' => CreateRule::class,
         'create:resource' => CreateResource::class,
         'create:seeder' => CreateSeeder::class,
+        'create:listener' => CreateListener::class,
+        'create:job' => CreateJob::class,
+        'create:middleware' =>CreateMiddleware::class,
         'create' => Create::class,
         'database:migrate' => DatabaseMigrate::class,
         'database:seed' => DatabaseSeed::class,
@@ -80,9 +83,6 @@ class Console
         'key:generate' => KeyGenerate::class,
         'poke' => Poke::class,
         'optimize' => Optimize::class,
-        'create:listener' => CreateListener::class,
-        'create:job' => CreateJob::class,
-        'create:middleware' =>CreateMiddleware::class,
     ];
 
     /**

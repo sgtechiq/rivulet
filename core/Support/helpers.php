@@ -244,3 +244,73 @@ if (! function_exists('carbon')) {
         return new Carbon($time);
     }
 }
+// Mail and Notifications Helpers
+if (!function_exists('SendEmail')) {
+   // SendEmail
+    function SendEmail(
+        $to,
+        string $subject,
+        string $type = 'text',
+        string $content,
+        array $data = [],
+        $cc = null,
+        $bcc = null,
+        array $attachments = []
+    ): bool {
+        $mailer = app()->make('mail')
+            ->to($to)
+            ->subject($subject);
+
+        // Handle CC/BCC if provided
+        if ($cc) {
+            $mailer->cc($cc);
+        }
+        if ($bcc) {
+            $mailer->bcc($bcc);
+        }
+
+        // Handle content type
+        if ($type === 'template') {
+            $mailer->view($content, $data);
+        } else {
+            $mailer->text($content);
+        }
+
+        // Handle attachments
+        foreach ($attachments as $attachment) {
+            if (is_array($attachment)) {
+                $mailer->attach($attachment['path'], $attachment['name'] ?? null);
+            } else {
+                $mailer->attach($attachment);
+            }
+        }
+
+        return $mailer->send();
+    }
+}
+if (!function_exists('Notify')) {
+    // SendNotification
+    function Notify(
+        $to,
+        string $channel,
+        string $title = '',
+        string $body = '',
+        array $data = []
+    ): bool {
+        try {
+            return app()->make('notification')
+                ->channel($channel)
+                ->to($to)
+                ->title($title)
+                ->body($body)
+                ->data($data)
+                ->send();
+        } catch (Exception $e) {
+            // Log error if logging is available
+            if (function_exists('log_error')) {
+                log_error("Notification failed: " . $e->getMessage());
+            }
+            throw $e;
+        }
+    }
+}
